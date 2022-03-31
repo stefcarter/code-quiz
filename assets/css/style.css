@@ -1,0 +1,34 @@
+.toprow {
+    color: white;
+    background-color: black;
+    padding: 10px;
+    border-radius: 50px;
+    margin:20px
+}
+
+.row1 {
+    padding-left: 10px;
+}
+
+.timeCount {
+    text-align:end;
+    margin:-20px 20px;
+}
+
+.container {
+    text-align:center;
+    margin: -20px 0px;
+    font-weight: bold;
+}
+
+.topTe {
+    font-size: 40px;
+}
+
+.filTe {
+    font-size: 30px;
+}
+
+.buttons {
+    border-radius: 15px;
+}
