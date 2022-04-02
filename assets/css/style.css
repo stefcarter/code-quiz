@@ -1,3 +1,8 @@
+.btn.correct {
+    --hue: var(--hue-correct);
+    background-color: green;
+}
+
 .toprow {
     color: white;
     background-color: black;
@@ -19,6 +24,7 @@
     text-align:center;
     margin: -20px 0px;
     font-weight: bold;
+    padding-top: 10%;
 }
 
 .topTe {
@@ -29,6 +35,39 @@
     font-size: 30px;
 }
 
-.buttons {
-    border-radius: 15px;
+/* button design for all */
+.btn-grid {
+    display: grid;
+    margin: 20px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: black;
+}
+
+.btn:hover {
+    border-color: white;
+}
+
+.start-btn,
+.next-btn {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.controls {
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
 }
