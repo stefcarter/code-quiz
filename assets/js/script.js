@@ -1,33 +1,7 @@
-// var timer = null;
-// seconds = 60;
-// var timerInt = 0;
-
-// // timer for start of quiz
-// renderTimer();
-// function renderTimer() {
-//      document.querySelector("#timer").textContent = seconds }
-
-// function startTimer() {
-//      timerInt = setInterval (
-//          function(){(--seconds)
-//              renderTimer()
-//         }
-        
-//     ,1000)
-// }
-
-//  var startButton =
-//  document.querySelector("#start");
-//  startButton.addEventListener("click", function(){
-//      startTimer()
-// })
-
-//  function myStopFunction() {
-//     clearInterval(seconds);
-// }
+// countdown timer
 
 // button const/functions/actions
-const startButton = document.getElementById('start-btn')
+const startBn = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
 const questionContainerElement = document.getElementById('question-container')
 const questionElement = document.getElementById('question')
@@ -35,14 +9,14 @@ const answerButtonsElement = document.getElementById('answer-buttons')
 
 let shuffledQuestions, currentQuestionIndex
 
-startButton.addEventListener('click', startGame)
+startBn.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
   currentQuestionIndex++
   setNextQuestion()
 })
 
 function startGame() {
-  startButton.classList.add('hide')
+  startBn.classList.add('hide')
   shuffledQuestions = questions.sort(() => Math.random() - .5)
   currentQuestionIndex = 0
   questionContainerElement.classList.remove('hide')
@@ -86,8 +60,8 @@ function selectAnswer(e) {
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove('hide')
   } else {
-    startButton.innerText = 'Restart'
-    startButton.classList.remove('hide')
+    startBn.innerHTML = '<a href="./score.html">Score</a>'
+    startBn.classList.remove('hide')
   }
 }
 
