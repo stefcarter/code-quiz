@@ -1,73 +1,51 @@
-.btn.correct {
-    --hue: var(--hue-correct);
-    background-color: green;
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    background-color: rgb(177, 174, 174);
 }
 
-.toprow {
-    color: white;
-    background-color: black;
+section{
+    background-color: white;
+    border: solid 2px black;
     padding: 10px;
-    border-radius: 50px;
-    margin:20px
+    border-radius: 15px;
+}
+.hide {
+    display: none;
 }
 
-.row1 {
-    padding-left: 10px;
+.show {
+    display: block;
+}
+h1{
+    text-align: center;
 }
 
-.timeCount {
-    text-align:end;
-    margin:-20px 20px;
+p{
+    padding: 0 10%;
+}
+
+#startButton{
+    display: block;
+    margin: 0 auto;
+}
+
+.choice{
+    display: block;
+    margin-top: 10px;
+    border-radius: 10px;
+    margin: 5px auto;
+    padding: 5px;
 }
 
 .container {
-    text-align:center;
-    margin: -20px 0px;
-    font-weight: bold;
-    padding-top: 10%;
+    text-align: center;
 }
 
-.topTe {
-    font-size: 40px;
-}
-
-.filTe {
-    font-size: 30px;
-}
-
-/* button design for all */
-.btn-grid {
-    display: grid;
-    margin: 20px;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn {
+.q-btn {
     border: 1px solid;
     border-radius: 10px;
     padding: 5px 10px;
     color: black;
-}
-
-.btn:hover {
-    border-color: white;
-}
-
-.start-btn,
-.next-btn {
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 10px 20px;
-}
-
-.controls {
-    justify-content: center;
-    align-items: center;
-    align-items: center;
-}
-
-.hide {
-    display: none;
 }

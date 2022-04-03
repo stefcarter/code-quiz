@@ -1,117 +1,117 @@
-// countdown timer
+// variables to keep track of quiz state
+var currentQuestionIndex = 0;
+var time = questions.length * 15;
+var timerId;
 
-// button const/functions/actions
-const startBn = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
+// variables to reference DOM elements....................................
+var timeEl = document.querySelector("#time");
+var startBtn = document.querySelector("#startButton");
+var submitBtn = document.querySelector("#submit-button");
+var titleScreen = document.querySelector("#title-section");
+var quizScreen = document.querySelector("#quiz-section");
+var highScoreScreen = document.querySelector("#highscore-section");
+var highScoreDisplay = document.querySelector("#highscore-display-section");
+var initialsEl = document.querySelector("#initials");
+var feedbackEl = document.querySelector("#feedback");
 
-let shuffledQuestions, currentQuestionIndex
+var questionsEl = document.querySelector("#question");
+var choicesEl = document.querySelector("#choices");
 
-startBn.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++
-  setNextQuestion()
-})
 
-function startGame() {
-  startBn.classList.add('hide')
-  shuffledQuestions = questions.sort(() => Math.random() - .5)
-  currentQuestionIndex = 0
-  questionContainerElement.classList.remove('hide')
-  setNextQuestion()
+//create a function to start the game
+function startQuiz() {
+    titleScreen.setAttribute("class", "hide");
+    quizScreen.setAttribute("class", "show");
+    timerId = setInterval(tick, 1000);
+    timeEl.textContent = time;
+  
+    getQuestion();
 }
 
-function setNextQuestion() {
-  resetState()
-  showQuestion(shuffledQuestions[currentQuestionIndex])
+function tick() {
+    time--;
+    timeEl.textContent = time;
+    if (time <= 0) {
+      quizEnd();
+    } 
 }
 
-function showQuestion(question) {
-  questionElement.innerText = question.question
-  question.answers.forEach(answer => {
-    const button = document.createElement('button')
-    button.innerText = answer.text
-    button.classList.add('btn')
-    if (answer.correct) {
-      button.dataset.correct = answer.correct
+function getQuestion() {
+    var currentQuestion = questions[currentQuestionIndex];
+    var titleEl = document.getElementById("question-title");
+    titleEl.textContent = currentQuestion.title;
+    choicesEl.innerHTML = "";
+  
+currentQuestion.choices.forEach(function(choice, i) {
+      var choiceNode = document.createElement("button");
+      choiceNode.setAttribute("class", "choice");
+      choiceNode.setAttribute("value", choice);
+  
+      choiceNode.textContent = i + 1 + ". " + choice;
+      choiceNode.onclick = questionClick;
+      choicesEl.appendChild(choiceNode);
+    });
+}
+
+  function questionClick() {
+    if (this.value !== questions[currentQuestionIndex].answer) {
+      time -= 15;
+  
+      if (time < 0) {
+        time = 0;
+      }
+      timeEl.textContent = time;
+  
+  
+      feedbackEl.textContent = "Wrong!";
+    } else {
+
+      feedbackEl.textContent = "Correct!";
+}
+
+feedbackEl.setAttribute("class", "feedback");
+    setTimeout(function() {
+      feedbackEl.setAttribute("class", "feedback hide");
+    }, 1000);
+    currentQuestionIndex++;
+    if (currentQuestionIndex === questions.length) {
+      quizEnd();
+    } else {
+      getQuestion();
     }
-    button.addEventListener('click', selectAnswer)
-    answerButtonsElement.appendChild(button)
-  })
 }
 
-function resetState() {
-  clearStatusClass(document.body)
-  nextButton.classList.add('hide')
-  while (answerButtonsElement.firstChild) {
-    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-  }
+
+// end the quiz function
+  function quizEnd() {
+    clearInterval(timerId);
+    var highscoreSectionEl = document.querySelector("#highscore-section");
+    highscoreSectionEl.setAttribute("class", "show");
+    var finalScoreEl = document.querySelector("#final-score");
+    finalScoreEl.textContent = time;
+    quizScreen.setAttribute("class", "hide");
+}
+function saveHighscore() {
+    var initials = initialsEl.value.trim();
+    if (initials !== "") {
+      var highscores =
+        JSON.parse(window.localStorage.getItem("highscores")) || [];
+      var newScore = {
+        score: time,
+        initials: initials
+      };
+      highscores.push(newScore);
+      window.localStorage.setItem("highscores", JSON.stringify(highscores));
+      window.location.href = "highScore.html";
+    }
 }
 
-function selectAnswer(e) {
-  const selectedButton = e.target
-  const correct = selectedButton.dataset.correct
-  setStatusClass(document.body, correct)
-  Array.from(answerButtonsElement.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct)
-  })
-  if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove('hide')
-  } else {
-    startBn.innerHTML = '<a href="./score.html">Score</a>'
-    startBn.classList.remove('hide')
-  }
+  function checkForEnter(event) {
+    if (event.key === "Enter") {
+      saveHighscore();
+    }
 }
-
-function setStatusClass(element, correct) {
-  clearStatusClass(element)
-  if (correct) {
-    element.classList.add('correct')
-  } else {
-    element.classList.add('wrong')
-  }
-}
-
-function clearStatusClass(element) {
-  element.classList.remove('correct')
-  element.classList.remove('wrong')
-}
-
-const questions = [
-  {
-    question: 'Sea otters do what while sleeping?',
-    answers: [
-      { text: 'Hold anothers hand', correct: true },
-      { text: 'Wear tiny clam hats', correct: false },
-      { text: 'Sleep on a log', correct: false },
-      { text: 'Hold anothers tail', correct: false }
-    ]
-  },
-  {
-    question: 'Are rats ticklish?',
-    answers: [
-      { text: 'Yes', correct: true },
-      { text: 'No', correct: false }
-    ]
-  },
-  {
-    question: 'Which bird can fly backwards?',
-    answers: [
-      { text: 'Crow', correct: false },
-      { text: 'Hummingbird', correct: true },
-      { text: 'American Robin ', correct: false },
-      { text: 'Northern Cardinal', correct: false }
-    ]
-  },
-  {
-    question: 'Largest giant squid ever measured?',
-    answers: [
-      { text: '20 feet', correct: false },
-      { text: '35 feet', correct: false },
-      { text: '43 feet', correct: true },
-      { text: '52 feet', correct: false },
-    ]
-  }
-]
+  
+  submitBtn.onclick = saveHighscore;
+  startBtn.onclick = startQuiz;
+  initialsEl.onkeyup = checkForEnter;
